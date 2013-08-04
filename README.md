@@ -5,9 +5,12 @@ A backup system written in PHP that uses the Dropbox API.
 
 I recommend that you set this up on an hourly cron, which will overwrite the file every hour (the files are stored in a 'ymd' folder), however Dropbox will keep all 24 revisions for that day for 30 days.
 
+**Still in very early development, test and test again before use.**
+
 You can currently backup:
  - MySQL
  - MongoDB
+ - Folders/Files
 
 ## Usage
 ```bash
