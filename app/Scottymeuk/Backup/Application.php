@@ -17,7 +17,7 @@ class Application extends SymfonyApplication
         }
 
         $this->config = json_decode(file_get_contents(ROOT . '/config.json'), true);
-        if (! isset($this->config['dropbox']) || ! isset($this->config['dropbox']['key'] || ! isset($this->config['dropbox']['secret']))) {
+        if (! isset($this->config['dropbox']) || ! isset($this->config['dropbox']['key']) || ! isset($this->config['dropbox']['secret'])) {
             echo 'Dropbox config does not exist.';
             return 1;
         }
