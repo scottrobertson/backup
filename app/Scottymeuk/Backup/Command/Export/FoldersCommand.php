@@ -24,7 +24,6 @@ class FoldersCommand extends Command
         $output->writeln('');
         $output->writeln('Exporting Folders');
         $output->writeln('---------------');
-        $output->writeln('');
 
         $config = $this->getApplication()->config;
         $upload = $this->getApplication()->find('dropbox:upload');
@@ -54,6 +53,7 @@ class FoldersCommand extends Command
 
         foreach ($config['folders'] as $folder) {
 
+            $output->writeln('');
             $output->writeln($folder);
 
             $clean_name = strtolower(ltrim($folder, '/'));
