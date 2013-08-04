@@ -57,10 +57,10 @@ class MySQLCommand extends Command
                 mkdir($local_path, 0777, true);
             }
 
-            $file = $db . '.sql';
+            $file = $db . '.sql.gz';
             $local_file = $local_path . $file;
 
-            exec(sprintf('mysqldump -u%s %s > %s', $config['mysql']['username'], $db, $local_file), $shell_output, $response);
+            exec(sprintf('mysqldump -u%s %s | gzip > %s', $config['mysql']['username'], $db, $local_file), $shell_output, $response);
             if ($response != 0) {
                 $output->writeln('> <error>Failed</error>');
             } else {
