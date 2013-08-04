@@ -15,16 +15,13 @@ class AllCommand extends Command
     {
         $this
             ->setName('export:all')
-            ->setDescription('Backup all')
+            ->setDescription('Backup all ')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $config = $this->getApplication()->config;
-        if (! isset($config['export'])) {
-            $config['export'] = array('mysql');
-        }
 
         if (in_array('mysql', $config['export'])) {
             $mysql = $this->getApplication()->find('export:mysql');
