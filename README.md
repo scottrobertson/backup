@@ -21,3 +21,23 @@ or
 ```bash
  bin/console export:all;
 ```
+
+## Example config.json
+```json
+{
+    "dropbox": {
+        "key": "",
+        "secret": ""
+    },
+    "host": "example.com",
+    "mysql": {
+        "host": "localhost",
+        "password": "password",
+        "username": "root"
+    },
+    "export" : [
+        "mongodb",
+        "mysql"
+    ]
+}
+```
