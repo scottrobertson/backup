@@ -41,7 +41,8 @@ class MongoDBCommand extends Command
         if (! is_dir($tmp_directory)) {
             mkdir($tmp_directory, 0777, true);
         }
-
+        $output->writeln('');
+        $output->writeln('Exporting');
         // Execute the exporting of MongoDB databases
         exec(sprintf('mongodump --out=%s', $tmp_directory), $exec_output, $dump_return);
         exec(sprintf('cd %s; tar -zcvf %s . 2>&1', $tmp_directory, $file_path), $exec_output, $tar_return);
@@ -61,15 +62,11 @@ class MongoDBCommand extends Command
 
         // Upload to Dropbox and check for response
         $dropbox_input = new ArrayInput($arguments);
-        if ($upload->run($dropbox_input, $output) === 0) {
-            $output->writeln('> <info>Sent to Dropbox</info>');
-        } else {
-            $output->writeln('> <error>Could not send to Dropbox</error>');
-        }
+        $upload->run($dropbox_input, $output);
 
         // Cleanup
         exec(sprintf('rm -rf %s', $tmp_directory));
         exec(sprintf('rm -f %s', $file_path));
-
+        $output->writeln('');
     }
 }

@@ -29,6 +29,9 @@ class DropboxUploadCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $output->writeln('');
+        $output->writeln('Uploading to Dropbox');
+
         $dialog = $this->getHelperSet()->get('dialog');
         $config = $this->getApplication()->config;
 
@@ -36,7 +39,7 @@ class DropboxUploadCommand extends Command
         $dropbox_path = $input->getArgument('dropbox_path');
 
         if (! file_exists($file)) {
-            $output->writeln('<error>File does not exist.</error>');
+            $output->writeln('><error>File does not exist.</error>');
             return 1;
         }
 
@@ -45,17 +48,25 @@ class DropboxUploadCommand extends Command
             'scottymeuk-upload'
         );
 
-        $metadata = $client->uploadFile(
+        $metadata = $client->getMetaData($dropbox_path);
+        if (isset($metadata['bytes']) && ($metadata['bytes'] === filesize($file))) {
+            $output->writeln('><info> File size the same, skipping</info>');
+            return 0;
+        }
+
+        $upload = $client->uploadFile(
             $dropbox_path,
             \Dropbox\WriteMode::force(),
             fopen($file, "rb"),
             filesize($file)
         );
 
-        if ($metadata) {
+        if ($upload) {
+            $output->writeln('> <info>Done</info>');
             return 0;
         }
 
+        $output->writeln('> <error>Failed sending to Dropbox</error>');
         return 1;
     }
 }

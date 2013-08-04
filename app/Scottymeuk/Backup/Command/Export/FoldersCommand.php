@@ -65,6 +65,9 @@ class FoldersCommand extends Command
                 continue;
             }
 
+            $output->writeln('');
+            $output->writeln('Compressing');
+
             exec(
                 sprintf(
                     'tar -zcvf %s -X %s %s 2>&1',
@@ -82,7 +85,7 @@ class FoldersCommand extends Command
             }
 
             $output->writeln(sprintf(
-                '> <info>Compressed (%smb)</info>',
+                '> <info>Done (%smb)</info>',
                 round(filesize($backup_file_path) / 1024 / 1024)
             ));
 
@@ -95,15 +98,13 @@ class FoldersCommand extends Command
 
             // Upload to Dropbox and check for response
             $dropbox_input = new ArrayInput($arguments);
-            if ($upload->run($dropbox_input, $output) === 0) {
-                $output->writeln('> <info>Sent to Dropbox</info>');
-            } else {
-                $output->writeln('> <error>Could not send to Dropbox</error>');
-            }
+            $upload->run($dropbox_input, $output);
 
             exec(sprintf('rm -f %s', $backup_file_path));
         }
 
         exec(sprintf('rm -rf %s', $backup_directory));
+        exec(sprintf('rm -f %s', $exclude_file));
+        $output->writeln('');
     }
 }

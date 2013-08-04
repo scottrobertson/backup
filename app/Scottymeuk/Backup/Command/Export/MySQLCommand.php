@@ -66,7 +66,7 @@ class MySQLCommand extends Command
             }
 
             // Output which DB we are backing up
-            $output->writeln($db);
+            $output->writeln('"'.$db.'"');
 
             // Setup the paths etc
             $path = $root_path . '/' . $db . '/';
@@ -86,6 +86,8 @@ class MySQLCommand extends Command
                 mkdir($local_path, 0777, true);
             }
 
+            $output->writeln('');
+            $output->writeln('Exporting');
             // Export the MySQL database using "mysqldump"
             exec(sprintf(
                 'mysqldump -u%s %s | gzip > %s',
@@ -99,13 +101,7 @@ class MySQLCommand extends Command
                 $output->writeln('> <error>Failed</error>');
             } else {
                 $output->writeln('> <info>Exported</info>');
-
-                // Check to see if the file was successfully uploaded to Dropbox
-                if ($upload->run($dropbox_input, $output) === 0) {
-                    $output->writeln('> <info>Sent to Dropbox</info>');
-                } else {
-                    $output->writeln('> <error>Could not send to Dropbox</error>');
-                }
+                $upload->run($dropbox_input, $output);
             }
 
             // Finally, remove the local backup folder
