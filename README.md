@@ -11,19 +11,19 @@ You can currently backup:
 
 ## Usage
 ```bash
- bin/console dropbox:auth; # Setup the Dropbox auth tokens
+ bin/console dropbox:auth # Setup the Dropbox auth tokens
 ```
 
 ```bash
- bin/console export:all; # Uses "export" from config.json (See below)
+ bin/console export:all # Uses "export" from config.json (See below)
 ```
 
 or
 
 ```bash
- bin/console export:mysql; # Export MySQL
- bin/console export:mongo; # Export MongoDB
- bin/console export:folders; # Export Folders (set in config.json)
+ bin/console export:mysql # Export MySQL
+ bin/console export:mongo # Export MongoDB
+ bin/console export:folders # Export Folders (set in config.json)
 ```
 
 ## Example config.json
