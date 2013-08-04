@@ -40,7 +40,14 @@ or
     },
     "export" : [
         "mongodb",
-        "mysql"
+        "mysql",
+        "folders"
+    ],
+    "folders" : [
+        "/var/www"
+    ],
+    "exclude_folders" : [
+        "/var/www/site.com"
     ]
 }
 ```
