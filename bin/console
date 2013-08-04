@@ -1,0 +1,14 @@
+#!/usr/bin/env php
+<?php
+
+define('ROOT', dirname(__DIR__));
+
+include ROOT . '/vendor/autoload.php';
+
+use Scottymeuk\Backup\Application;
+
+$application = new Application('Backup', '1.0');
+$application->add(new Scottymeuk\Backup\Command\MySQLCommand());
+$application->add(new Scottymeuk\Backup\Command\DropboxAuthCommand());
+$application->add(new Scottymeuk\Backup\Command\DropboxUploadCommand());
+$application->run();
