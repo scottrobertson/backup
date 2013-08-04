@@ -9,6 +9,15 @@ You can currently backup:
 
 ## Usage
 ```bash
- bin/console dropbox:auth;
+ bin/console dropbox:auth; # Setup the Dropbox auth tokens
+```
+
+
+```bash
+ bin/console export:mysql; # Export MySQL
+ bin/console export:mongo; # Export MongoDB
+```
+or
+```bash
  bin/console export:all;
 ```
