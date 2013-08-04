@@ -19,7 +19,7 @@ You can currently backup:
 ```
 or
 ```bash
- bin/console export:all;
+ bin/console export:all; # Uses "export" from config.json (See below)
 ```
 
 ## Example config.json
