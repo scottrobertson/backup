@@ -15,7 +15,7 @@ class AllCommand extends Command
     {
         $this
             ->setName('export:all')
-            ->setDescription('Backup all ')
+            ->setDescription('Backup using all available means (specify in config.json)')
         ;
     }
 

@@ -28,7 +28,9 @@ class MongoDBCommand extends Command
         $config = $this->getApplication()->config;
         $upload = $this->getApplication()->find('dropbox:upload');
 
-        $backup_path = ROOT . '/backups/mongodb/';
+        // Setup the paths etc
+        $backup_path_name = 'mongodb/';
+        $backup_path = BACKUPS . '/' . $backup_path_name;
         $file_name = date('Y-m-d') . '.gz';
         $file_path = $backup_path . $file_name;
         if (! is_dir($backup_path)) {
@@ -40,9 +42,9 @@ class MongoDBCommand extends Command
             mkdir($tmp_directory, 0777, true);
         }
 
+        // Execute the exporting of MongoDB databases
         exec(sprintf('mongodump --out=%s', $tmp_directory), $exec_output, $dump_return);
         exec(sprintf('cd %s; tar -zcvf %s . 2>&1', $tmp_directory, $file_path), $exec_output, $tar_return);
-
         if ($dump_return != 0 || $tar_return != 0) {
             $output->writeln('<error>Error exporting MongoDB</error>');
             return 1;
@@ -50,21 +52,22 @@ class MongoDBCommand extends Command
 
         $output->writeln('> <info>Exported</info>');
 
+        // Setup Dropbox arguments
         $arguments = array(
             'command' => 'dropbox:upload',
             'file' => $file_path,
             'dropbox_path'    => $config['dropbox']['path'] . 'mongodb/' . $file_name,
         );
 
-        $input = new ArrayInput($arguments);
-
-        $returnCode = $upload->run($input, $output);
-        if ($returnCode === 0) {
+        // Upload to Dropbox and check for response
+        $dropbox_input = new ArrayInput($arguments);
+        if ($upload->run($dropbox_input, $output) === 0) {
             $output->writeln('> <info>Sent to Dropbox</info>');
         } else {
             $output->writeln('> <error>Could not send to Dropbox</error>');
         }
 
+        // Cleanup
         exec(sprintf('rm -rf %s', $tmp_directory));
         exec(sprintf('rm -f %s', $file_path));
 

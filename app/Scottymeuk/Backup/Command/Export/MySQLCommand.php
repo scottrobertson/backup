@@ -27,17 +27,22 @@ class MySQLCommand extends Command
         $output->writeln('');
 
         $config = $this->getApplication()->config;
-
         if (! isset($config['mysql'])) {
             $output->writeln('<error>No MySQL config found.</error>');
             return 1;
         }
 
+        // Set the MySQL password as an enviroment variable.
+        // The reason for this is that mysql now throws a warning
+        // that using passwords in CLI is insecure
         putenv('MYSQL_PWD=' . $config['mysql']['password']);
 
+        // Get a list of all the databases this user has access to
         $pdo = new \PDO('mysql:host=' . $config['mysql']['host'], $config['mysql']['username'], $config['mysql']['password']);
         $databases = $pdo->query('SHOW DATABASES');
 
+        // A list of all the databases we wish to ignore.
+        // TODO: allow this to be configured in config.json
         $ignored_databases = array(
             'performance_schema',
             'mysql',
@@ -45,49 +50,66 @@ class MySQLCommand extends Command
             'information_schema'
         );
 
+        // The root path as to which the files shall be stored in Dropbox
+        // and locally
+        $root_path = 'mysql/' . date('Y-m-d');
+
+        // Setup the Dropbox upload command
         $upload = $this->getApplication()->find('dropbox:upload');
 
+        // Loop over each database
         while (($db = $databases->fetchColumn(0)) !== false) {
+
+            // If the database is in our ignored list, then skip
             if (in_array($db, $ignored_databases)) {
                 continue;
             }
 
+            // Output which DB we are backing up
             $output->writeln($db);
 
-            $root_path = 'mysql/' . date('Y-m-d');
+            // Setup the paths etc
             $path = $root_path . '/' . $db . '/';
+            $local_path = BACKUPS . '/' . $path;
+            $file = $db . '.sql.gz';
+            $local_file = $local_path . $file;
 
-            $local_path = ROOT . '/backups/' . $path;
+            // Setup the Dropbox command with arguments
+            $arguments = array(
+                'command' => 'dropbox:upload',
+                'file' => $local_file,
+                'dropbox_path'    => $config['dropbox']['path'] . $path . $file,
+            );
+            $dropbox_input = new ArrayInput($arguments);
+
             if (! is_dir($local_path)) {
                 mkdir($local_path, 0777, true);
             }
 
-            $file = $db . '.sql.gz';
-            $local_file = $local_path . $file;
+            // Export the MySQL database using "mysqldump"
+            exec(sprintf(
+                'mysqldump -u%s %s | gzip > %s',
+                $config['mysql']['username'],
+                $db,
+                $local_file
+            ), $shell_output, $response);
 
-            exec(sprintf('mysqldump -u%s %s | gzip > %s', $config['mysql']['username'], $db, $local_file), $shell_output, $response);
+            // If the response code was not 0, then something went wrong
             if ($response != 0) {
                 $output->writeln('> <error>Failed</error>');
             } else {
                 $output->writeln('> <info>Exported</info>');
 
-                $arguments = array(
-                    'command' => 'dropbox:upload',
-                    'file' => $local_file,
-                    'dropbox_path'    => $config['dropbox']['path'] . $path . $file,
-                );
-
-                $input = new ArrayInput($arguments);
-                $returnCode = $upload->run($input, $output);
-
-                if ($returnCode === 0) {
+                // Check to see if the file was successfully uploaded to Dropbox
+                if ($upload->run($dropbox_input, $output) === 0) {
                     $output->writeln('> <info>Sent to Dropbox</info>');
                 } else {
                     $output->writeln('> <error>Could not send to Dropbox</error>');
                 }
-
-                exec('rm -rf ' . $root_path);
             }
+
+            // Finally, remove the local backup folder
+            exec('rm -rf ' . $root_path);
             $output->writeln('');
         }
     }

@@ -13,7 +13,7 @@ class DropboxAuthCommand extends Command
     {
         $this
             ->setName('dropbox:auth')
-            ->setDescription('Authorise Dropbox')
+            ->setDescription('Authorise this app to access your Dropbox account.')
         ;
     }
 
@@ -23,7 +23,7 @@ class DropboxAuthCommand extends Command
         $config = $this->getApplication()->config;
 
         $appInfo = \Dropbox\AppInfo::loadFromJson($config['dropbox']);
-        $webAuth = new \Dropbox\WebAuthNoRedirect($appInfo, "scottymeuk-authorize", "en");
+        $webAuth = new \Dropbox\WebAuthNoRedirect($appInfo, 'scottymeuk-authorize', 'en');
         $authorizeUrl = $webAuth->start();
 
         $output->writeln('1. Go to: ' . $authorizeUrl);
@@ -31,7 +31,6 @@ class DropboxAuthCommand extends Command
         $output->writeln('3. Copy the authorization code.');
         $output->writeln('');
 
-        // 4k09iGXtBQgAAAAAAAAAAbqVYXWRkmZywExBYvpPYrM
         $authCode = $dialog->ask(
             $output,
             'Enter the authorization code here: '
@@ -50,9 +49,7 @@ class DropboxAuthCommand extends Command
             'userId' => $userId
         );
 
-
         $config['dropbox'] = array_merge($config['dropbox'], $authArr);
-
         $this->getApplication()->writeConfig($config);
     }
 }

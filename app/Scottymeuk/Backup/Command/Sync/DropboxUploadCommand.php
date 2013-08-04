@@ -13,16 +13,16 @@ class DropboxUploadCommand extends Command
     {
         $this
             ->setName('dropbox:upload')
-            ->setDescription('Upload a file to Dropbox')
+            ->setDescription('Upload a file to Dropbox using their API')
             ->addArgument(
                 'file',
                 InputArgument::REQUIRED,
-                'Which file do you want to upload?'
+                'What file do you want to upload?'
             )
             ->addArgument(
                 'dropbox_path',
                 InputArgument::REQUIRED,
-                'The Dropbox path'
+                'What should the file be stored as in Dropbox?'
             )
         ;
     }
@@ -40,14 +40,17 @@ class DropboxUploadCommand extends Command
             return 1;
         }
 
-        $client = new \Dropbox\Client($config['dropbox']['access_token'], "scottymeuk-upload");
+        $client = new \Dropbox\Client(
+            $config['dropbox']['access_token'],
+            'scottymeuk-upload'
+        );
 
-        $size = null;
-        if (stream_is_local($file)) {
-            $size = filesize($file);
-        }
-
-        $metadata = $client->uploadFile($dropbox_path, \Dropbox\WriteMode::force(), fopen($file, "rb"), $size);
+        $metadata = $client->uploadFile(
+            $dropbox_path,
+            \Dropbox\WriteMode::force(),
+            fopen($file, "rb"),
+            filesize($file)
+        );
 
         if ($metadata) {
             return 0;
