@@ -37,7 +37,7 @@ class DropboxUploadCommand extends Command
 
         if (! file_exists($file)) {
             $output->writeln('<error>File does not exist.</error>');
-            exit;
+            return 1;
         }
 
         $client = new \Dropbox\Client($config['dropbox']['access_token'], "scottymeuk-upload");
@@ -47,10 +47,12 @@ class DropboxUploadCommand extends Command
             $size = filesize($file);
         }
 
-        $metadata = $client->uploadFile($dropbox_path, \Dropbox\WriteMode::add(), fopen($file, "rb"), $size);
+        $metadata = $client->uploadFile($dropbox_path, \Dropbox\WriteMode::force(), fopen($file, "rb"), $size);
+
         if ($metadata) {
-            return true;
+            return 0;
         }
-        return false;
+
+        return 1;
     }
 }

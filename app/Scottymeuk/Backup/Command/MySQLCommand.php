@@ -39,11 +39,13 @@ class MySQLCommand extends Command
 
         while (($db = $dbs->fetchColumn(0)) !== false) {
             if (in_array($db, $ignored_dbs)) {
-                $output->writeln('<comment>Skipped:</comment> ' . $db);
                 continue;
             }
 
-            $path = 'mysql/' . date('ymd') . '/' . $db . '/';
+            $output->writeln($db);
+
+            $root_path = 'mysql/' . date('Y-m-d');
+            $path = $root_path . '/' . $db . '/';
 
             $local_path = ROOT . '/backups/' . $path;
             if (! is_dir($local_path)) {
@@ -55,8 +57,9 @@ class MySQLCommand extends Command
 
             exec(sprintf('mysqldump -u%s %s > %s', $config['mysql']['username'], $db, $local_file), $shell_output, $response);
             if ($response != 0) {
-                $output->writeln('<error>Failed:</error> ' . $db);
+                $output->writeln('> <error>Failed</error>');
             } else {
+                $output->writeln('> <info>Exported</info>');
 
                 $arguments = array(
                     'command' => 'dropbox:upload',
@@ -68,14 +71,14 @@ class MySQLCommand extends Command
                 $returnCode = $upload->run($input, $output);
 
                 if ($returnCode === 0) {
-                    $output->writeln('<info>Success:</info> ' . $db);
+                    $output->writeln('> <info>Sent to Dropbox</info>');
                 } else {
-                    $output->writeln('<error>Failed:</error> ' . $db);
+                    $output->writeln('> <error>Could not send to Dropbox</error>');
                 }
 
-                exec('rm -rf ' . $local_path);
-
+                exec('rm -rf ' . $root_path);
             }
+            $output->writeln('');
         }
     }
 }
