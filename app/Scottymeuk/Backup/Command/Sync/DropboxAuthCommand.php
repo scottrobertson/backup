@@ -1,5 +1,5 @@
 <?php
-namespace Scottymeuk\Backup\Command;
+namespace Scottymeuk\Backup\Command\Sync;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;

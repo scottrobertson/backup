@@ -1,5 +1,5 @@
 <?php
-namespace Scottymeuk\Backup\Command;
+namespace Scottymeuk\Backup\Command\Export;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -14,21 +14,26 @@ class MySQLCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('backup:mysql')
+            ->setName('export:mysql')
             ->setDescription('Backup all MySQL databases')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $output->writeln('');
+        $output->writeln('Exporting MySQL');
+        $output->writeln('---------------');
+        $output->writeln('');
+
         $config = $this->getApplication()->config;
 
         putenv('MYSQL_PWD=' . $config['mysql']['password']);
 
-        $dbh = new \PDO('mysql:host=' . $config['mysql']['host'], $config['mysql']['username'], $config['mysql']['password']);
-        $dbs = $dbh->query('SHOW DATABASES');
+        $pdo = new \PDO('mysql:host=' . $config['mysql']['host'], $config['mysql']['username'], $config['mysql']['password']);
+        $databases = $pdo->query('SHOW DATABASES');
 
-        $ignored_dbs = array(
+        $ignored_databases = array(
             'performance_schema',
             'mysql',
             'test',
@@ -37,8 +42,8 @@ class MySQLCommand extends Command
 
         $upload = $this->getApplication()->find('dropbox:upload');
 
-        while (($db = $dbs->fetchColumn(0)) !== false) {
-            if (in_array($db, $ignored_dbs)) {
+        while (($db = $databases->fetchColumn(0)) !== false) {
+            if (in_array($db, $ignored_databases)) {
                 continue;
             }
 

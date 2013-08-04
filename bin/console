@@ -8,7 +8,8 @@ include ROOT . '/vendor/autoload.php';
 use Scottymeuk\Backup\Application;
 
 $application = new Application('Backup', '1.0');
-$application->add(new Scottymeuk\Backup\Command\MySQLCommand());
-$application->add(new Scottymeuk\Backup\Command\DropboxAuthCommand());
-$application->add(new Scottymeuk\Backup\Command\DropboxUploadCommand());
+$application->add(new Scottymeuk\Backup\Command\Export\AllCommand());
+$application->add(new Scottymeuk\Backup\Command\Export\MySQLCommand());
+$application->add(new Scottymeuk\Backup\Command\Sync\DropboxAuthCommand());
+$application->add(new Scottymeuk\Backup\Command\Sync\DropboxUploadCommand());
 $application->run();
