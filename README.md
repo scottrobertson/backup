@@ -23,6 +23,7 @@ or
 ```bash
  bin/console export:mysql; # Export MySQL
  bin/console export:mongo; # Export MongoDB
+ bin/console export:folders; # Export Folders (set in config.json)
 ```
 
 ## Example config.json
