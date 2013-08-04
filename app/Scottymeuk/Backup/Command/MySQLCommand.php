@@ -43,7 +43,7 @@ class MySQLCommand extends Command
                 continue;
             }
 
-            $path = 'mysql/' . date('ymd') '/' . $db . '/';
+            $path = 'mysql/' . date('ymd') . '/' . $db . '/';
 
             $local_path = ROOT . '/backups/' . $path;
             if (! is_dir($local_path)) {
