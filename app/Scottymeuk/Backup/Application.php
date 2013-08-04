@@ -22,6 +22,11 @@ class Application extends SymfonyApplication
             return 1;
         }
 
+        if (! isset($this->config['host'])) {
+            echo 'You must specify a "host" in config.json.';
+            return 1;
+        }
+
         $this->config['dropbox']['path'] = '/' . $this->config['host'] . '/';
 
     }
