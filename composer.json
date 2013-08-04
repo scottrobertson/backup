@@ -1,0 +1,5 @@
+{
+    "require" : {
+        "marcqualie/hoard" : "~0.0.1" 
+    }
+}
