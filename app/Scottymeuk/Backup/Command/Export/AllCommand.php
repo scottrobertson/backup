@@ -23,6 +23,11 @@ class AllCommand extends Command
     {
         $config = $this->getApplication()->config;
 
+        if (! isset($config['export'])) {
+            $output->writeln('<error>You must supply an "export" array in config.json</error>');
+            return 1;
+        }
+
         if (in_array('mysql', $config['export'])) {
             $mysql = $this->getApplication()->find('export:mysql');
             $returnCode = $mysql->run($input, $output);
