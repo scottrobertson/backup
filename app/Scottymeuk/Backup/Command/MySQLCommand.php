@@ -43,7 +43,7 @@ class MySQLCommand extends Command
                 continue;
             }
 
-            $path = 'mysql/' . $db . '/' . date('ymd') . '/';
+            $path = 'mysql/' . date('ymd') '/' . $db . '/';
 
             $local_path = ROOT . '/backups/' . $path;
             if (! is_dir($local_path)) {
@@ -72,6 +72,8 @@ class MySQLCommand extends Command
                 } else {
                     $output->writeln('<error>Failed:</error> ' . $db);
                 }
+
+                exec('rm -rf ' . $local_path);
 
             }
         }
