@@ -30,5 +30,10 @@ class AllCommand extends Command
             $mysql = $this->getApplication()->find('export:mysql');
             $returnCode = $mysql->run($input, $output);
         }
+
+        if (in_array('mongodb', $config['export'])) {
+            $mongodb = $this->getApplication()->find('export:mongodb');
+            $returnCode = $mongodb->run($input, $output);
+        }
     }
 }
