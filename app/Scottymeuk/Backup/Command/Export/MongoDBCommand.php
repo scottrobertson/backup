@@ -28,7 +28,7 @@ class MongoDBCommand extends Command
         $config = $this->getApplication()->config;
         $upload = $this->getApplication()->find('dropbox:upload');
 
-        $backup_path = ROOT . '/backups/mongo/';
+        $backup_path = ROOT . '/backups/mongodb/';
         $file_name = date('ymd') . '.gz';
         $file_path = $backup_path . $file_name;
         if (! is_dir($backup_path)) {
@@ -53,7 +53,7 @@ class MongoDBCommand extends Command
         $arguments = array(
             'command' => 'dropbox:upload',
             'file' => $file_path,
-            'dropbox_path'    => $config['dropbox']['path'] . 'mongo/' . $file_name,
+            'dropbox_path'    => $config['dropbox']['path'] . 'mongodb/' . $file_name,
         );
 
         $input = new ArrayInput($arguments);
