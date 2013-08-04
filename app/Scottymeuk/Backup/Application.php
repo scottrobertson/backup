@@ -33,9 +33,4 @@ class Application extends SymfonyApplication
         $json_config = json_encode($config, $json_options);
         file_put_contents(ROOT . '/config.json', $json_config);
     }
-
-    public function putToDropbox($folder)
-    {
-
-    }
 }
