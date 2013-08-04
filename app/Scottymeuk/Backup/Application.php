@@ -12,11 +12,16 @@ class Application extends SymfonyApplication
         parent::__construct($name, $version);
 
         if (! file_exists(ROOT . '/config.json')) {
-            echo 'Config file does not exist';
-            exit;
+            echo 'config.json file does not exist.';
+            return 1;
         }
 
         $this->config = json_decode(file_get_contents(ROOT . '/config.json'), true);
+        if (! isset($this->config['dropbox'])) {
+            echo 'Dropbox config does not exist.';
+            return 1;
+        }
+
         $this->config['dropbox']['path'] = '/' . $this->config['host'] . '/';
 
     }
