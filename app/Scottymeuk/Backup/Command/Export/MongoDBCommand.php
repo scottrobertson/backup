@@ -29,7 +29,7 @@ class MongoDBCommand extends Command
         $upload = $this->getApplication()->find('dropbox:upload');
 
         $backup_path = ROOT . '/backups/mongodb/';
-        $file_name = date('ymd') . '.gz';
+        $file_name = date('Y-m-d') . '.gz';
         $file_path = $backup_path . $file_name;
         if (! is_dir($backup_path)) {
             mkdir($backup_path, 0777, true);
