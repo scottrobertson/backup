@@ -28,6 +28,11 @@ class MySQLCommand extends Command
 
         $config = $this->getApplication()->config;
 
+        if (! isset($config['mysql'])) {
+            $output->writeln('<error>No MySQL config found.</error>');
+            return 1;
+        }
+
         putenv('MYSQL_PWD=' . $config['mysql']['password']);
 
         $pdo = new \PDO('mysql:host=' . $config['mysql']['host'], $config['mysql']['username'], $config['mysql']['password']);
