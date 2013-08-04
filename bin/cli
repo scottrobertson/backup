@@ -1,0 +1,10 @@
+#!/usr/bin/env php
+<?php
+// app/console
+
+use Scottymeuk\Backup\Command\MySQLCommand;
+use Symfony\Component\Console\Application;
+
+$application = new Application();
+$application->add(new MySQLCommand);
+$application->run();
