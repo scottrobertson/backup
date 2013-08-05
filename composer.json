@@ -1,6 +1,5 @@
 {
     "require" : {
-        "marcqualie/hoard" : "~0.0.1",
         "symfony/console": "v2.3.2",
         "dropbox/dropbox-sdk": "1.1.*"
     },
