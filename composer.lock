@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "bfbc73af1848dbc8f742c622d506abfe",
+    "hash": "8fb293cac9bad4bfbaae8db75cc6ae36",
     "packages": [
         {
             "name": "dropbox/dropbox-sdk",
@@ -42,51 +42,6 @@
                 "dropbox"
             ],
             "time": "2013-07-08 07:30:40"
-        },
-        {
-            "name": "marcqualie/hoard",
-            "version": "v0.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/marcqualie/hoard-php-client.git",
-                "reference": "v0.0.1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/marcqualie/hoard-php-client/zipball/v0.0.1",
-                "reference": "v0.0.1",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Hoard": "lib"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Marc Qualie",
-                    "email": "hoard@marcqualie.com",
-                    "homepage": "http://marcqualie.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Hoard client library for PHP",
-            "homepage": "http://github.com/marcqualie/hoard-php-client",
-            "keywords": [
-                "analytics",
-                "log",
-                "logging",
-                "stats"
-            ],
-            "time": "2013-01-21 16:57:29"
         },
         {
             "name": "symfony/console",
