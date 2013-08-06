@@ -13,8 +13,7 @@ class DropboxAuthCommand extends Command
     {
         $this
             ->setName('dropbox:auth')
-            ->setDescription('Authorise this app to access your Dropbox account.')
-        ;
+            ->setDescription('Authorise this app to access your Dropbox account.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

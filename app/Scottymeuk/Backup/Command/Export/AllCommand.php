@@ -8,15 +8,13 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\ArgvInput as ArgvInput;
 
-
 class AllCommand extends Command
 {
     protected function configure()
     {
         $this
             ->setName('export:all')
-            ->setDescription('Backup using all available means (specify in config.json)')
-        ;
+            ->setDescription('Backup using all available means (specify in config.json)');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

@@ -8,15 +8,13 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\ArrayInput as ArrayInput;
 
-
 class MySQLCommand extends Command
 {
     protected function configure()
     {
         $this
             ->setName('export:mysql')
-            ->setDescription('Backup all MySQL databases')
-        ;
+            ->setDescription('Backup all MySQL databases');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

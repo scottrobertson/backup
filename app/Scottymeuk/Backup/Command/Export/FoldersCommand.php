@@ -8,15 +8,13 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\ArrayInput as ArrayInput;
 
-
 class FoldersCommand extends Command
 {
     protected function configure()
     {
         $this
             ->setName('export:folders')
-            ->setDescription('Backup all folders specified in config.json')
-        ;
+            ->setDescription('Backup all folders specified in config.json');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

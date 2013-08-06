@@ -23,8 +23,7 @@ class DropboxUploadCommand extends Command
                 'dropbox_path',
                 InputArgument::REQUIRED,
                 'What should the file be stored as in Dropbox?'
-            )
-        ;
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

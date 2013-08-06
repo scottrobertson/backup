@@ -8,15 +8,13 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\ArrayInput as ArrayInput;
 
-
 class MongoDBCommand extends Command
 {
     protected function configure()
     {
         $this
             ->setName('export:mongodb')
-            ->setDescription('Backup all MongoDB databases')
-        ;
+            ->setDescription('Backup all MongoDB databases');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
