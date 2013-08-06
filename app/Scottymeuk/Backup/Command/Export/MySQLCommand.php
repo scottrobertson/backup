@@ -2,9 +2,7 @@
 namespace Scottymeuk\Backup\Command\Export;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\ArrayInput as ArrayInput;
 
@@ -27,6 +25,7 @@ class MySQLCommand extends Command
         $config = $this->getApplication()->config;
         if (! isset($config['mysql'])) {
             $output->writeln('<error>No MySQL config found.</error>');
+
             return 1;
         }
 

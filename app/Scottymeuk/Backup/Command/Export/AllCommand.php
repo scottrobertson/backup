@@ -2,11 +2,8 @@
 namespace Scottymeuk\Backup\Command\Export;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\ArgvInput as ArgvInput;
 
 class AllCommand extends Command
 {
@@ -23,6 +20,7 @@ class AllCommand extends Command
 
         if (! isset($config['export'])) {
             $output->writeln('<error>You must supply an "export" array in config.json</error>');
+
             return 1;
         }
 

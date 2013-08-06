@@ -13,17 +13,20 @@ class Application extends SymfonyApplication
 
         if (! file_exists(ROOT . '/config.json')) {
             echo 'config.json file does not exist.';
+
             return 1;
         }
 
         $this->config = json_decode(file_get_contents(ROOT . '/config.json'), true);
         if (! isset($this->config['dropbox']) || ! isset($this->config['dropbox']['key']) || ! isset($this->config['dropbox']['secret'])) {
             echo 'Dropbox config does not exist.';
+
             return 1;
         }
 
         if (! isset($this->config['host'])) {
             echo 'You must specify a "host" in config.json.';
+
             return 1;
         }
 

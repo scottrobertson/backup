@@ -2,9 +2,7 @@
 namespace Scottymeuk\Backup\Command\Export;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\ArrayInput as ArrayInput;
 
@@ -46,6 +44,7 @@ class MongoDBCommand extends Command
         exec(sprintf('cd %s; tar -zcvf %s . 2>&1', $tmp_directory, $file_path), $exec_output, $tar_return);
         if ($dump_return != 0 || $tar_return != 0) {
             $output->writeln('<error>Error exporting MongoDB</error>');
+
             return 1;
         }
 

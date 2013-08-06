@@ -4,7 +4,6 @@ namespace Scottymeuk\Backup\Command\Sync;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class DropboxUploadCommand extends Command
@@ -39,6 +38,7 @@ class DropboxUploadCommand extends Command
 
         if (! file_exists($file)) {
             $output->writeln('><error>File does not exist.</error>');
+
             return 1;
         }
 
@@ -50,6 +50,7 @@ class DropboxUploadCommand extends Command
         $metadata = $client->getMetaData($dropbox_path);
         if (isset($metadata['bytes']) && ($metadata['bytes'] === filesize($file))) {
             $output->writeln('><info> File size the same, skipping</info>');
+
             return 0;
         }
 
@@ -62,10 +63,12 @@ class DropboxUploadCommand extends Command
 
         if ($upload) {
             $output->writeln('> <info>Done</info>');
+
             return 0;
         }
 
         $output->writeln('> <error>Failed sending to Dropbox</error>');
+
         return 1;
     }
 }

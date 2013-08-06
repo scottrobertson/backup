@@ -2,9 +2,7 @@
 namespace Scottymeuk\Backup\Command\Export;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\ArrayInput as ArrayInput;
 
@@ -26,9 +24,9 @@ class FoldersCommand extends Command
         $config = $this->getApplication()->config;
         $upload = $this->getApplication()->find('dropbox:upload');
 
-
         if (! isset($config['folders']) || ! count($config['folders'])) {
             $output->writeln('<error>No folders specified in config.json</error>');
+
             return 1;
         }
 
