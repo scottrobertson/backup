@@ -11,23 +11,20 @@ class Application extends SymfonyApplication
     {
         parent::__construct($name, $version);
 
-        if (! file_exists(ROOT . '/config.json')) {
-            echo 'config.json file does not exist.';
-
-            return 1;
+        if (! file_exists(CONFIG)) {
+            echo CONFIG . ' file does not exist.';
+            exit;
         }
 
-        $this->config = json_decode(file_get_contents(ROOT . '/config.json'), true);
+        $this->config = json_decode(file_get_contents(CONFIG), true);
         if (! isset($this->config['dropbox']) || ! isset($this->config['dropbox']['key']) || ! isset($this->config['dropbox']['secret'])) {
             echo 'Dropbox config does not exist.';
-
-            return 1;
+            exit;
         }
 
         if (! isset($this->config['host'])) {
-            echo 'You must specify a "host" in config.json.';
-
-            return 1;
+            echo 'You must specify a "host" in ' . CONFIG;
+            exit;
         }
 
         $this->config['dropbox']['path'] = '/' . $this->config['host'] . '/';
@@ -44,6 +41,6 @@ class Application extends SymfonyApplication
         }
 
         $json_config = json_encode($config, $json_options);
-        file_put_contents(ROOT . '/config.json', $json_config);
+        file_put_contents(CONFIG, $json_config);
     }
 }

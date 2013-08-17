@@ -1,0 +1,19 @@
+{
+    "chmod": "0755",
+    "directories": [
+        "app",
+        "vendor"
+    ],
+    "finder": [
+        {
+            "name": "*.php",
+            "exclude": ["Tests"],
+            "in": "vendor"
+        }
+    ],
+    "git-version": "git-version",
+    "git-commit": "git-commit",
+    "main": "bin/console",
+    "output": "backup.phar",
+    "stub": true
+}
