@@ -12,18 +12,23 @@ class Application extends SymfonyApplication
         parent::__construct($name, $version);
 
         if (! file_exists(CONFIG)) {
-            echo CONFIG . ' file does not exist.';
+            echo CONFIG . " file does not exist.\n";
             exit;
         }
 
         $this->config = json_decode(file_get_contents(CONFIG), true);
+        if (! $this->config) {
+            echo "Config file is invalid. \n";
+            exit;
+        }
+
         if (! isset($this->config['dropbox']) || ! isset($this->config['dropbox']['key']) || ! isset($this->config['dropbox']['secret'])) {
-            echo 'Dropbox config does not exist.';
+            echo "Dropbox config does not exist. \n";
             exit;
         }
 
         if (! isset($this->config['host'])) {
-            echo 'You must specify a "host" in ' . CONFIG;
+            echo 'You must specify a "host" in ' . CONFIG . "\n";
             exit;
         }
 
