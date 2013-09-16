@@ -7,16 +7,16 @@
     "packages": [
         {
             "name": "dropbox/dropbox-sdk",
-            "version": "v1.1.0",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dropbox/dropbox-sdk-php.git",
-                "reference": "v1.1.0"
+                "reference": "dce57e4f5e50a23e497e9e8db647839d404ee0b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dropbox/dropbox-sdk-php/zipball/v1.1.0",
-                "reference": "v1.1.0",
+                "url": "https://api.github.com/repos/dropbox/dropbox-sdk-php/zipball/dce57e4f5e50a23e497e9e8db647839d404ee0b8",
+                "reference": "dce57e4f5e50a23e497e9e8db647839d404ee0b8",
                 "shasum": ""
             },
             "require": {
@@ -41,7 +41,7 @@
             "keywords": [
                 "dropbox"
             ],
-            "time": "2013-07-08 07:30:40"
+            "time": "2013-08-22 02:38:03"
         },
         {
             "name": "symfony/console",
