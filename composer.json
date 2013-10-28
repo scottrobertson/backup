@@ -1,7 +1,7 @@
 {
     "require" : {
-        "symfony/console": "v2.3.2",
-        "dropbox/dropbox-sdk": "1.1.*"
+        "symfony/console": "~2.3",
+        "dropbox/dropbox-sdk": "~1.1"
     },
     "autoload" : {
     	"psr-0" : {
