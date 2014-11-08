@@ -87,8 +87,10 @@ class MySQLCommand extends Command
             $output->writeln('Exporting');
             // Export the MySQL database using "mysqldump"
             exec(sprintf(
-                'mysqldump -u%s %s | gzip > %s',
+                'mysqldump -u%s -p%s -h %s %s | gzip > %s',
                 $config['mysql']['username'],
+                $config['mysql']['password'],
+                $config['mysql']['host'],
                 $db,
                 $local_file
             ), $shell_output, $response);
