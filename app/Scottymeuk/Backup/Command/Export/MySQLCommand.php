@@ -95,13 +95,6 @@ class MySQLCommand extends Command
                 $config['mysql']['username']='';
                 $possibleerrorstring.="\r\n".' Username not set!';
             }
-            if (isset($config['mysql']['password']) && !empty($config['mysql']['password'])){
-                $passwordstring=' -p%s';
-            }else{
-                $passwordstring='';
-                $config['mysql']['password']='';
-                $possibleerrorstring.="\r\n".' Password not set!';
-            }
             if (isset($config['mysql']['host']) && !empty($config['mysql']['host'])){
                 $hostdstring=' -h %s';
             }else{
@@ -111,9 +104,8 @@ class MySQLCommand extends Command
             }
 
             $execstring =sprintf(
-                'mysqldump '.$userstring.$passwordstring.$hostdstring.' %s | gzip > %s',
+                'mysqldump '.$userstring.$hostdstring.' %s | gzip > %s',
                 $config['mysql']['username'],
-                $config['mysql']['password'],
                 $config['mysql']['host'],
                 $db,
                 $local_file
