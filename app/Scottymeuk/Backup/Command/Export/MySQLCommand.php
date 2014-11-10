@@ -86,37 +86,16 @@ class MySQLCommand extends Command
             $output->writeln('');
             $output->writeln('Exporting');
             // Export the MySQL database using "mysqldump"
-            $possibleerrorstring='';
-            // prepair parameters
-            if (isset($config['mysql']['username']) && !empty($config['mysql']['username'])){
-                $userstring=' -u%s';
-            }else{
-                $userstring='';
-                $config['mysql']['username']='';
-                $possibleerrorstring.="\r\n".' Username not set!';
-            }
-            if (isset($config['mysql']['host']) && !empty($config['mysql']['host'])){
-                $hostdstring=' -h %s';
-            }else{
-                $hostdstring='';
-                $config['mysql']['host']='';
-                $possibleerrorstring.="\r\n".' Mysql server hostname not set!';
-            }
-
-            $execstring =sprintf(
-                'mysqldump '.$userstring.$hostdstring.' %s | gzip > %s',
+            exec(sprintf(
+                'mysqldump -u%s %s | gzip > %s',
                 $config['mysql']['username'],
-                $config['mysql']['host'],
                 $db,
                 $local_file
-            );
-            exec($execstring, $shell_output, $response);
+            ), $shell_output, $response);
 
             // If the response code was not 0, then something went wrong
             if ($response != 0) {
                 $output->writeln('> <error>Failed</error>');
-                $output->writeln('> <error>Try to execute:'.$execstring.'</error>');
-                $output->writeln('> <error>Possible errors:'.$possibleerrorstring.'</error>');
             } else {
                 $output->writeln('> <info>Exported</info>');
                 $upload->run($dropbox_input, $output);
