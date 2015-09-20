@@ -39,6 +39,13 @@ or
         "secret": ""
     },
     "host": "example.com",
+    "mongodb": {
+        "host": "localhost",
+        "port": 232323,
+        "password": "password",
+        "username": "admin",
+        "database": "test"
+    },
     "mysql": {
         "host": "localhost",
         "password": "password",

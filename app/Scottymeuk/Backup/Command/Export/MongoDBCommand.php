@@ -22,6 +22,17 @@ class MongoDBCommand extends Command
         $output->writeln('---------------');
 
         $config = $this->getApplication()->config;
+        $config = $this->getApplication()->config;
+            
+        $cmd = 'mongodump';
+        if (isset($config['mongodb'])) {
+            if (isset($config['mongodb']['port'])) $cmd .= ' --port '. $config['mongodb']['port'];
+            if (isset($config['mongodb']['username'])) $cmd .= ' --username '. $config['mongodb']['username'];
+            if (isset($config['mongodb']['password'])) $cmd .= ' --password '. $config['mongodb']['password'];
+            if (isset($config['mongodb']['database'])) $cmd .= ' --db '. $config['mongodb']['database'];
+        }
+        $cmd .= ' --out=%s';
+
         $upload = $this->getApplication()->find('dropbox:upload');
 
         // Setup the paths etc
@@ -40,10 +51,12 @@ class MongoDBCommand extends Command
         $output->writeln('');
         $output->writeln('Exporting');
         // Execute the exporting of MongoDB databases
-        exec(sprintf('mongodump --out=%s', $tmp_directory), $exec_output, $dump_return);
+        $output->writeln($cmd);
+
+        exec(sprintf($cmd, $tmp_directory), $exec_output, $dump_return);
         exec(sprintf('cd %s; tar -zcvf %s . 2>&1', $tmp_directory, $file_path), $exec_output, $tar_return);
         if ($dump_return != 0 || $tar_return != 0) {
-            $output->writeln('<error>Error exporting MongoDB</error>');
+            $output->writeln('<error>Error exporting MongoDB. Check config.</error>');
 
             return 1;
         }
