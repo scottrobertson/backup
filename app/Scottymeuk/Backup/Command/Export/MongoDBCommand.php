@@ -27,6 +27,7 @@ class MongoDBCommand extends Command
         $cmd = 'mongodump';
         if (isset($config['mongodb'])) {
             if (isset($config['mongodb']['host'])) $cmd .= ' --host '. $config['mongodb']['host'];
+            if (isset($config['mongodb']['database'])) $cmd .= ' --database '. $config['mongodb']['database'];
             if (isset($config['mongodb']['port'])) $cmd .= ' --port '. $config['mongodb']['port'];
             if (isset($config['mongodb']['username'])) $cmd .= ' --username '. $config['mongodb']['username'];
             if (isset($config['mongodb']['password'])) $cmd .= ' --password '. $config['mongodb']['password'];
