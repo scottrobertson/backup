@@ -76,6 +76,18 @@ class MongoDBCommand extends Command
         $dropbox_input = new ArrayInput($arguments);
         $upload->run($dropbox_input, $output);
 
+	// Repeat the process to create a latest.tar.gz file for sharing/downloads
+        // Setup Dropbox arguments
+        $arguments = array(
+            'command' => 'dropbox:upload',
+            'file' => $file_path,
+            'dropbox_path'    => $config['dropbox']['path'] . 'mongodb/latest.tar.gz',
+        );
+
+        // Upload to Dropbox and check for response
+        $dropbox_input = new ArrayInput($arguments);
+        $upload->run($dropbox_input, $output);
+
         // Cleanup
         exec(sprintf('rm -rf %s', $tmp_directory));
         exec(sprintf('rm -f %s', $file_path));
