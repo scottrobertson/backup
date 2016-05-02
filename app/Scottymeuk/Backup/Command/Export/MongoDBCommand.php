@@ -53,7 +53,7 @@ class MongoDBCommand extends Command
         $output->writeln('');
         $output->writeln('Exporting');
         // Execute the exporting of MongoDB databases
-        $output->writeln($cmd);
+        // $output->writeln($cmd); don't show the command as it contains passwords
 
         exec(sprintf($cmd, $tmp_directory), $exec_output, $dump_return);
         exec(sprintf('cd %s; tar -zcvf %s . 2>&1', $tmp_directory, $file_path), $exec_output, $tar_return);
