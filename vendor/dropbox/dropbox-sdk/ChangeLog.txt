@@ -1,0 +1,28 @@
+---------------------------------------------
+1.1.1 (2013-08-21)
+
+- uploadFile no longer closes the caller's input stream.
+	
+---------------------------------------------
+1.1.0 (2013-07-08)
+
+- Switch to OAuth 2.  This is a backwards incompatible change to the auth API,
+  but all regular API calls remain unchanged.
+
+---------------------------------------------
+1.0.2 (2013-06-17)
+
+- Fixed performance problem with file uploads when reading from from a
+  network stream.
+- Treat HTTP 502 like HTTP 500 (yields better retry behavior)
+
+---------------------------------------------
+1.0.1 (2013-05-09)
+
+- Fix Client.getMetadataWithChildrenIfChanged
+- Add "--locale=..." option to examples.
+
+---------------------------------------------
+1.0.0 (2013-04-04)
+
+- First versioned release.
